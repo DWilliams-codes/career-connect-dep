@@ -12,10 +12,10 @@ class All_Recruiters(APIView):
 class A_Recruiter(APIView):
     def get(self, request, id_or_name):
         if id_or_name.isnumeric():
-            recruiter = RecruiterSerializer(get_object_or_404(Recruiter, id = id_or_name)).data
+            recruiter = RecruiterSerializer(get_object_or_404(Recruiter, id = id_or_name))
         else:
-            recruiter = Recruiter.objects.filter(name = id_or_name).values()
-        return Response(recruiter)
+            recruiter = RecruiterSerializer(Recruiter.objects.filter(name = id_or_name))
+        return Response(recruiter.data)
 class A_Recruiter_by_email(APIView):
     def get(self, request, email):
         recruiter = RecruiterSerializer(get_object_or_404(Recruiter, email = email)).data

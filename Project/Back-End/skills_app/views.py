@@ -6,7 +6,7 @@ from .serializers import SkillSerializer
 # Create your views here.
 class All_Skills(APIView):
     def get(self, request):
-        skills = SkillSerializer(Skill.objects.all(), many = True)
+        skills = SkillSerializer(Skill.objects.all().order_by("name"), many = True)
         return Response(skills.data)
 class A_Skill(APIView):
     def get(self, request, name):

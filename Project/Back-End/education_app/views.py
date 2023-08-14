@@ -7,7 +7,7 @@ from .serializers import EducationSerializer
 # Create your views here.
 class All_Education(APIView):
     def get(self, request):
-        all_education = EducationSerializer(Education.objects.all(), many = True)
+        all_education = EducationSerializer(Education.objects.all().order_by("school_name"), many = True)
         return Response(all_education.data)
 class Education_by_School(APIView):
     def get(self, request, school_name):

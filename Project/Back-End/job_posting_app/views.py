@@ -9,7 +9,7 @@ from rest_framework.permissions import IsAuthenticated
 # Create your views here.
 class All_Job_Postings(APIView):
     def get(self, request):
-        job = Job_PostingSerializer(Job_Posting.objects.all(), many = True)
+        job = Job_PostingSerializer(Job_Posting.objects.all().order_by("title"), many = True)
         return Response(job.data)
 class A_Job_Posting(APIView):
     def get(self, request, id_or_title):
