@@ -5,4 +5,4 @@ class ApplicantSerializer(ModelSerializer):
 
     class Meta:
         model = Applicant
-        fields = ["email", "education", "skills", "favorites"]
+        fields = ["__all__"]
