@@ -7,7 +7,7 @@ from .serializers import CompanySerializer
 # Create your views here.
 class All_Companies(APIView):
     def get(self, request):
-        companies = CompanySerializer(Company.objects.all(), many = True)
+        companies = CompanySerializer(Company.objects.all().order_by("name"), many = True)
         return Response(companies)
 class A_Company(APIView):
     def get(self,request, name_or_id):
