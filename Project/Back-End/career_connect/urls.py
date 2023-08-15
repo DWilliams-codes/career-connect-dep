@@ -25,4 +25,5 @@ urlpatterns = [
     path('api/v1/companys/', include("company_app.urls")),
     path('api/v1/skills/', include("skills_app.urls")),
     path('api/v1/education/', include("education_app.urls")),
+    path('api/v1/adzuna/', include("api_app.urls"))
 ]
