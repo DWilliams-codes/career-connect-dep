@@ -7,14 +7,21 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import authenticate
 from rest_framework.status import HTTP_201_CREATED, HTTP_404_NOT_FOUND, HTTP_204_NO_CONTENT, HTTP_200_OK
+from applicant_app.models import Applicant
+from recruiter_app.models import Recruiter
 
 # Create your views here.
+# ask how to have Sign_Up automatically create Applicants or Recruiters
 class Sign_Up(APIView):
     def post(self, request):
         request.data["username"] = request.data.get("email")
         new_user = User.objects.create_user(**request.data)
         token = Token.objects.create(user = new_user)
-        return Response({"user": new_user.email, "token":token.key}, status=HTTP_201_CREATED)
+        if new_user.account_type.lower() == "applicant":
+            Applicant.objects.create(email = new_user)
+        else:
+            Recruiter.objects.create(email = new_user)
+        return Response({"user": new_user.email, "account_type":new_user.account_type,"token":token.key}, status=HTTP_201_CREATED)
 class Log_In(APIView):
     def post(self, request):
         user = authenticate(**request.data)
