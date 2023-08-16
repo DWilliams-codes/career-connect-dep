@@ -5,4 +5,4 @@ class Job_PostingSerializer(ModelSerializer):
 
     class Meta:
         model = Job_Posting
-        fields = ["__all__"]
+        fields = ["__all__".lower()]

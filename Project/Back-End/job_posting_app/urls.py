@@ -13,7 +13,7 @@ urlpatterns = [
     # Returns job posting with specific degree requirement
     path("education/<str:education>/",Job_Postings_by_Education.as_view(),name="jobs_by_education"),
     # Returns all job postings under a specific company
-    path("company/<str:company>/", Job_Postings_by_Company.as_view(), name="jobs_by_company"),
+    path("company/<str:request_company>/", Job_Postings_by_Company.as_view(), name="jobs_by_company"),
     # Returns posting by job type (full-time,Part-time,Contract)
     path("type/<str:type>/", Job_Postings_by_Type.as_view(), name="job_by_type"),
     # Returns job postings in specific city
