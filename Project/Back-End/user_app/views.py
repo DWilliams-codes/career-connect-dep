@@ -11,7 +11,7 @@ from applicant_app.models import Applicant
 from recruiter_app.models import Recruiter
 
 # Create your views here.
-# ask how to have Sign_Up automatically create Applicants or Recruiters
+# Signs up users and creates Respective account type, Refactor to Groups
 class Sign_Up(APIView):
     def post(self, request):
         request.data["username"] = request.data.get("email")
@@ -22,6 +22,7 @@ class Sign_Up(APIView):
         else:
             Recruiter.objects.create(email = new_user)
         return Response({"user": new_user.email, "account_type":new_user.account_type,"token":token.key}, status=HTTP_201_CREATED)
+# Logs in User
 class Log_In(APIView):
     def post(self, request):
         user = authenticate(**request.data)
@@ -29,12 +30,14 @@ class Log_In(APIView):
             token, created = Token.objects.get_or_create(user = user)
             return Response({"token":token.key,"user":user.email}, status=HTTP_200_OK)
         return Response("INVALID CREDENTIALS", status=HTTP_404_NOT_FOUND)
+# Log Out user
 class Log_Out(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     def post(self, request):
         request.user.auth_token.delete()
         return Response(status=HTTP_204_NO_CONTENT)
+# Return user email
 class Info(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]

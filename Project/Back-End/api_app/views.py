@@ -8,9 +8,13 @@ import pprint
 pp = pprint.PrettyPrinter(indent=2)
 app_id = "4b14710d"
 api_key = "0fb491faea64ffec4a826d11877899b1"
-class Azunda(APIView):
+class Adzuna(APIView):
     def get(self, request, **parmaters):
-        endpoint = f"https://api.adzuna.com/v1/api/jobs/us/search/1?app_id={app_id}d&app_key={api_key}"+parmaters
+        # Testing API Calls
+        parmaters = "&what=softwareengineer"
+        endpoint = f"https://api.adzuna.com/v1/api/jobs/us/search/1?app_id={app_id}&app_key={api_key}{parmaters}"
         response = requests.get(endpoint)
-        pp.pprint(response)
-        return Response(response)
+        jsonresponse = response.json()
+        pp.pprint(jsonresponse)
+        print(endpoint)
+        return Response(jsonresponse)

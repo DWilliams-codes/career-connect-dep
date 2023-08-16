@@ -7,7 +7,7 @@ from applicant_app.models import Applicant
 # Create your models here.
 class Job_Posting(models.Model):
     title = models.CharField()
-    job_type = models.CharField()
+    job_type = models.CharField(default="full-time")
     job_description = models.CharField()
     skill = models.ManyToManyField(Skill,related_name="job_postings")
     salary_range = models.BigIntegerField()

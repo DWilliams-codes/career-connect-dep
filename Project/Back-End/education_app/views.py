@@ -5,10 +5,12 @@ from .models import Education
 from .serializers import EducationSerializer
 from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_200_OK
 # Create your views here.
+# Returns All education ordered by school
 class All_Education(APIView):
     def get(self, request):
         all_education = EducationSerializer(Education.objects.all().order_by("school_name"), many = True)
         return Response(all_education.data,status=HTTP_200_OK)
+# Returns all educations under a specific school
 class Education_by_School(APIView):
     def get(self, request, school_name):
         try:
@@ -16,6 +18,7 @@ class Education_by_School(APIView):
             return Response(education_by_school,status=HTTP_200_OK)
         except:
             return Response("Invalid School",status=HTTP_400_BAD_REQUEST)
+# Returns all educations within a specific degree field (Computer Science, ect.)
 class Education_by_field(APIView):
     def get(self, request, degree_field):
         try:
@@ -23,6 +26,7 @@ class Education_by_field(APIView):
             return Response(education_by_field,status=HTTP_200_OK)
         except:
             return Response("Invalid Degree Field",status=HTTP_400_BAD_REQUEST)
+# Returns all education for a specific degree type (associates, bachelors, masters, phd)
 class Education_by_degree(APIView):
     def get(self, request, degree_type):
         try:

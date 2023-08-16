@@ -1,6 +1,7 @@
 from django.urls import path
-from .views import Azunda
+from .views import Adzuna
 
 urlpatterns = [
-    path('',Azunda.as_view(),name="azunda"),
+    # pings adzuna api for search
+    path('', Adzuna.as_view(),name="adzuna"),
 ]
