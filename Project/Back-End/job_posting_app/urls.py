@@ -4,11 +4,18 @@ from .converters import IntOrStrConverter
 
 register_converter(IntOrStrConverter, 'int_or_str')
 urlpatterns = [
+    # Returns All Job Postings
     path("", All_Job_Postings.as_view(), name="all_job_postings"),
+    # Returns a job posting by ID or all job posting with that name, Post to create job postings
     path("<int_or_str:id_or_title>/",A_Job_Posting.as_view(), name="a_job_posting"),
+    # Returns all job postings that have a specific skill
     path("skill/<str:job_skill>/",Job_Postings_by_Skills.as_view(), name="jobs_by_skill"),
+    # Returns job posting with specific degree requirement
     path("education/<str:education>/",Job_Postings_by_Education.as_view(),name="jobs_by_education"),
+    # Returns all job postings under a specific company
     path("company/<str:company>/", Job_Postings_by_Company.as_view(), name="jobs_by_company"),
+    # Returns posting by job type (full-time,Part-time,Contract)
     path("type/<str:type>/", Job_Postings_by_Type.as_view(), name="job_by_type"),
+    # Returns job postings in specific city
     path("location/<str:location>/", Job_Postings_by_location.as_view(), name="job_by_location"),
 ]

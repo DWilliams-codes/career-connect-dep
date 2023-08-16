@@ -18,12 +18,20 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
+    # Admin site
     path('admin/', admin.site.urls),
+    # Job postings
     path('api/v1/job_postings/', include("job_posting_app.urls")),
+    # Applicants
     path('api/v1/applicants/', include("applicant_app.urls")),
+    # Recuiters
     path('api/v1/recruiters/', include("recruiter_app.urls")),
-    path('api/v1/companys/', include("company_app.urls")),
+    # Companies
+    path('api/v1/companies/', include("company_app.urls")),
+    # Skills
     path('api/v1/skills/', include("skills_app.urls")),
+    # Educations
     path('api/v1/education/', include("education_app.urls")),
-    path('api/v1/adzuna/', include("api_app.urls"))
+    # Adzuna Third Party API
+    path('api/v1/adzuna/', include("api_app.urls")),
 ]
