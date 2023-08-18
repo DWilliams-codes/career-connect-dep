@@ -4,11 +4,13 @@ import HomePage from "./components/Homepage.jsx";
 import ProfilePage from "./components/ProfilePage.jsx";
 import SignIn from "./components/SignInPage.jsx";
 import Companies from "./components/CompaniesPage.jsx";
+import ErrorPage from "./components/ErrorPage.jsx";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <App />,
+        errorElement: <ErrorPage/>,
         children: [
             {
                 index: true,
