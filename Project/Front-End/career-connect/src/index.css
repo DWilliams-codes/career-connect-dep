@@ -25,3 +25,17 @@ nav {
     text-align: center;
 
 }
+.company-card{
+    color: #000000;
+    font-family: "Iceland-Regular", Helvetica;
+    line-height: normal;
+    text-align: center;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 8px;
+    width: 300px;
+    height: 200px;
+    
+}
