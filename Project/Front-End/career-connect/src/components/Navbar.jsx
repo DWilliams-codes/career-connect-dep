@@ -7,7 +7,6 @@ export default function Navbar() {
         <h1>Career Connect</h1>
         {/* Add home button functionality to Career Connect H1 later */}
         <Link to= "">Home</Link>
-        <Link to="/job-search">Find Jobs</Link>
         <Link to="/companies">Find Companies</Link>
         <Link to="/sign-in">Sign-In/Sign-Up</Link>
     </nav>

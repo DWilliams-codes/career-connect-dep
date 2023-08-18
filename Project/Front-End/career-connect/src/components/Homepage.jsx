@@ -1,16 +1,25 @@
-
-
+import { useNavigate } from "react-router-dom";
+import JobCard from "./JobCard";
 
 
 export default function HomePage() {
+    const navigate = useNavigate();
 
     return (
-    <>
-       <h1>Search For Jobs</h1>
-       <input type="text" placeholder="Job Title"   />
+        <><div className="searchbar">
+        <h1>This is the HomePage</h1>
+        <h1>Search For Jobs</h1>
+       <input type="text" placeholder="Job Title" />
        <input type="text" placeholder="Location"   />
-  <button disabled={''}onClick={() => {navigate(`/Job-listings/`), window.location.reload(false)}}>Search</button>
-    </>
+      <button onClick={() => {window.location.reload(false)}}>Search</button>
+      </div>
+      <div>
+        <JobCard />
+        <JobCard />
+        <JobCard />
+        <JobCard />
+    </div>
+      </>
     );
   };
   
