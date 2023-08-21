@@ -9,6 +9,7 @@ from api_app.views import Adzuna
 import json
 
 # Create your views here.
+# Refactor to ask for everything in one url request 
 # Returns all job postings
 class All_Job_Postings(APIView):
     def get(self, request):
