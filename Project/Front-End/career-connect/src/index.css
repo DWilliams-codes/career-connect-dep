@@ -6,22 +6,57 @@ nav {
     background-color: lightblue;
 }
 .job-card {
-        color: #000000;
-        font-family: "Iceland-Regular", Helvetica;
-        line-height: normal;
-        text-align: center;
-        flex-direction: column;
-        justify-content: space-around;
-        align-items: center;
-        border: 1px solid black;
-        border-radius: 8px;
-        width: 264px;
-        height: 400px;
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .job-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .job-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+  }
+  
+  .job-card p {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: #666;
+  }
+  
+  .job-card div {
+    margin-top: 1rem;
+  }
+  
+  .job-card div p {
+    font-size: 1rem;
+    color: #444;
+  }
         
     
-}
+
 .searchbar{
     line-height: normal;
     text-align: center;
 
+}
+.company-card{
+    color: #000000;
+    font-family: "Iceland-Regular", Helvetica;
+    line-height: normal;
+    text-align: center;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 8px;
+    width: 300px;
+    height: 200px;
+    
 }
