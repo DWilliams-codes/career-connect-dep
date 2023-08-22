@@ -4,14 +4,11 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 import pprint
 from datetime import datetime
+from personal_project_env.api_keys import api_key, app_id
 # Create your views here.
 # Ask about best way to intergrate data from Adzuna APIs
 # Refactor to Grab Multiple Pages of Data
 pp = pprint.PrettyPrinter(indent=2)
-# Refactor: Hide Api keys
-#  hide this key in a .env file that does not get pushed to github
-app_id = "4b14710d"
-api_key = "0fb491faea64ffec4a826d11877899b1"
 # I would break this function up a bit and follow the Single Responsibility Principle to isolate behavior and help debugging later on in your projects life
 class Adzuna(APIView):
     def get_jobs(parameters=" "):
