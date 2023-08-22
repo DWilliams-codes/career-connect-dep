@@ -11,6 +11,7 @@ import json
 # Create your views here.
 # Refactor to ask for everything in one url request 
 # Returns all job postings
+
 class All_Job_Postings(APIView):
     def get(self, request):
         jobs = Job_PostingSerializer(Job_Posting.objects.all().order_by("title"), many = True).data
@@ -32,12 +33,12 @@ class A_Job_Posting(APIView):
                 # Changes the value to fit the url
                 url_name = id_or_title.replace(" ","%20")
                 # Pings Adzuna api to get list of jobs
-                adzuna_list = Adzuna.get_jobs(parmaters=f"&what={url_name}")
+                adzuna_list = Adzuna.get_jobs(parameters=f"&what={url_name}")
                 # Add job listing query set to adzuna list
                 adzuna_list+=job_posting
             return Response(adzuna_list,status=HTTP_200_OK)
         except:
-            return Response("Invalid Job Posting!",status=HTTP_400_BAD_REQUEST)
+            return Response(f"Invalid Job Posting {id_or_title}!",status=HTTP_400_BAD_REQUEST)
     def post(self, request, job_posting_data):
         authentication_classes = [TokenAuthentication]
         permission_classes = [IsAuthenticated]
@@ -84,7 +85,7 @@ class Job_Postings_by_Company(APIView):
             # Changes company to fit url
             url_name = request_company.replace(" ","%20")
             # searches Adzuna database for Job-Posting by the company
-            adzuna_list = Adzuna.get_jobs(parmaters=f"&company={url_name}")
+            adzuna_list = Adzuna.get_jobs(parameters=f"&company={url_name}")
             # Combine adzuna job postings list with local list
             adzuna_list+=job_postings_by_company
             return Response(adzuna_list,status=HTTP_200_OK)
@@ -107,9 +108,12 @@ class Job_Postings_by_location(APIView):
             job_postings_by_location = Job_Posting.objects.filter(location = location).values_list()
             url_location = location.replace(",","%2c")
             # searches through adzuna database for list of jobs at that location
-            adzuna_list = Adzuna.get_jobs(parmaters=f"&where={url_location}")
+            adzuna_list = Adzuna.get_jobs(parameters=f"&where={url_location}")
             # Combine adzuna job postings list with local list
             adzuna_list+=job_postings_by_location
             return Response(adzuna_list,status=HTTP_200_OK)
         except:
             return Response("Invalid Job Posting!",status=HTTP_400_BAD_REQUEST)
+
+def urlfilter(unfilteredURL):
+    return(unfilteredURL.replace(" ","%20"))

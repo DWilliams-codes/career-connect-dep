@@ -34,4 +34,6 @@ urlpatterns = [
     path('api/v1/education/', include("education_app.urls")),
     # Adzuna Third Party API
     path('api/v1/adzuna/', include("api_app.urls")),
+    # Path for user authentication
+    path("api/v1/users/", include("user_app.urls")),
 ]
