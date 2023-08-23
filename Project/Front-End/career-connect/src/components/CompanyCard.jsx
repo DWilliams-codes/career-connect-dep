@@ -1,7 +1,7 @@
 
 
 export default function CompanyCard() {
-
+  // placeholder until i refactor backend
     return (
       <><div className="company-card">
         <h1>Company</h1>

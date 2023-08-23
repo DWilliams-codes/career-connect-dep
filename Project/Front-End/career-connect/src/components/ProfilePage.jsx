@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 
-
+//  PlaceHolder page
 export default function ProfilePage() {
   const navigate = useNavigate();
     return (
