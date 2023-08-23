@@ -12,6 +12,7 @@ export default function App() {
   return (
     <div>
       <Navbar />
+      {/* passes user down to entire app */}
       <userContext.Provider value ={{user, setUser}}>
      <Outlet />
      </userContext.Provider>
