@@ -1,4 +1,4 @@
-import CompanyCard from "./CompanyCard";
+import CompanyCard from "../components/CompanyCard";
 import { useNavigate } from "react-router-dom";
 
 

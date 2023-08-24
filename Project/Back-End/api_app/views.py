@@ -6,6 +6,7 @@ import pprint
 from datetime import datetime
 from personal_project_env.api_keys import api_key, app_id
 # Create your views here.
+# Nice job hiding your API key on the front-end, but you'll likely still want to regenerate it along with the app_id if possible since it is still in the commit history for this PR.
 # Ask about best way to intergrate data from Adzuna APIs
 # Refactor to Grab Multiple Pages of Data
 pp = pprint.PrettyPrinter(indent=2)

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import JobCard from "./JobCard";
+import JobCard from "../components/JobCard";
 import { useState, useEffect } from "react";
 import axios from "axios";
 

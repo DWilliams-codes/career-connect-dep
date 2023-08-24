@@ -1,34 +1,42 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { api } from "../utilities";
-import { userContext } from "../App";
+import { api } from "../../utilities";
+import { userContext } from "../../App";
 import { useContext } from "react";
-export default function SignUpPage() {
+export default function ApplicantSignUpPage() {
     const navigate = useNavigate();
     const [userName,setUserName] = useState("");
     const [password, setpassword ] = useState("");
-    const [accounttype, setAccountType] = useState("");
     const { setUser } = useContext(userContext);
+    const accounttype = "applicant";
     //  function to sign up user
     const signUp = async(e) => {
         //  prevent page reload
         e.preventDefault();
         //  pings backend api to create user
+        try{
         let response = await api.post("users/sign-up/",{
             email : userName,
             password : password,
-            account_type : accounttype
-        })
-        let user = response.data.user
-        let token = response.data.token
-        setUser(user)
-        localStorage.setItem("token", token)
-        console.log("User created")
-        navigate("")
-    }
+            account_type : accounttype,
+            education : null,
+            skills : null,
+        });
+        let user = response.data.user;
+        let token = response.data.token;
+        setUser(user);
+        localStorage.setItem("token", token);
+        api.defaults.headers.common["Authorization"] = `Token ${token}`;
+        console.log("User created");
+        navigate("/ProfilePage");
+      }
+      catch{
+        window.location.reload(true);
+      };
+    };
     return (
     <>
-        <h1>This is a a Sign-Up page</h1>
+        <h1>Applicant Registration</h1>
         {/* for to run sign-in request */}
         <form onSubmit= {(e) =>signUp(e)}>
           <h5>Create Account</h5>
@@ -43,14 +51,9 @@ export default function SignUpPage() {
           value={password}
           onChange={(e) => setpassword(e.target.value)} 
           placeholder="Password"   />
-         {/* input to set account type */}
-          <input type="account type"
-          placeholder="account type"
-          value={accounttype}
-          onChange={(e) => setAccountType(e.target.value)}/>
-          <input type="submit" />
+          <input type="submit"/>
        </form>
-  <button onClick={() => {navigate(`/sign-in`)}}>Sign-Up</button>
+  <button onClick={() => {navigate(`/sign-in`)}}>Sign-In</button>
     </>
     );
   };
