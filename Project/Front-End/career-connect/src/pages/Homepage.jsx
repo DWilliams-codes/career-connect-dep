@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import JobCard from "./JobCard";
+import JobCard from "../components/JobCard";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -58,7 +58,7 @@ export default function HomePage() {
             jobtitle={job.title} 
             company={job.company}
             location={job.location}
-            description={job.description}/>
+            description={job.job_description}/>
             </li>
           ))}
         </ul>

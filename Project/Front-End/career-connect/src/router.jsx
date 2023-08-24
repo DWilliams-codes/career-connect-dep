@@ -1,11 +1,13 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App.jsx";
-import HomePage from "./components/Homepage.jsx";
-import ProfilePage from "./components/ProfilePage.jsx";
-import SignIn from "./components/SignInPage.jsx";
-import Companies from "./components/CompaniesPage.jsx";
-import ErrorPage from "./components/ErrorPage.jsx";
-import SignUpPage from "./components/SignUp.jsx";
+import HomePage from "./pages/Homepage.jsx";
+import ProfilePage from "./pages/UserPages/ProfilePage.jsx";
+import Companies from "./pages/CompaniesPage.jsx";
+import ErrorPage from "./pages/ErrorPage.jsx";
+import SignInPage from "./pages/UserPages/SignInPage.jsx";
+import RecruiterSignUpPage from "./pages/UserPages/RecruiterSignUp.jsx";
+import ApplicantSignUpPage from "./pages/UserPages/ApplicantSignUp.jsx";
+import SelectAccountTypePage from "./pages/UserPages/AccountTypePage.jsx";
 
 const router = createBrowserRouter([
     {
@@ -27,7 +29,7 @@ const router = createBrowserRouter([
             {   
                 // Sign-In Page
                 path: "sign-in",
-                element: <SignIn/>,
+                element: <SignInPage/>,
             },
             {
                 // Companies Page
@@ -36,8 +38,16 @@ const router = createBrowserRouter([
             },
             {   
                 //  Sign-Up Page
-                path: "sign-up",
-                element: <SignUpPage />,
+                path: "recruiter/sign-up",
+                element: <RecruiterSignUpPage />,
+            },
+            {
+                path: "accountTypePage",
+                element:<SelectAccountTypePage />,
+            },
+            {
+                path:"applicant/sign-up",
+                element: <ApplicantSignUpPage />
             },
         ],
     },

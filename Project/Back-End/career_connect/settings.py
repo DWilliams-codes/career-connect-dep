@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework.authtoken',
     'corsheaders',
     'rest_framework',
     'user_app',
@@ -46,7 +47,6 @@ INSTALLED_APPS = [
     'job_posting_app',
     'skills_app',
     'education_app',
-    'address_app',
     'api_app',
 ]
 

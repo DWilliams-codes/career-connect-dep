@@ -1,31 +1,41 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { api } from "../utilities";
-import { userContext } from "../App";
+import { api } from "../../utilities";
+import { userContext } from "../../App";
 import { useContext } from "react";
-export default function SignUpPage() {
+export default function RecruiterSignUpPage() {
     const navigate = useNavigate();
     const [userName,setUserName] = useState("");
     const [password, setpassword ] = useState("");
-    const [accounttype, setAccountType] = useState("");
+    const [company, setcompany] = useState("");
+    const [name, setName ] = useState("");
     const { setUser } = useContext(userContext);
+    const accounttype = "recruiter";
     //  function to sign up user
     const signUp = async(e) => {
         //  prevent page reload
         e.preventDefault();
         //  pings backend api to create user
+        try{
         let response = await api.post("users/sign-up/",{
             email : userName,
             password : password,
-            account_type : accounttype
-        })
-        let user = response.data.user
-        let token = response.data.token
-        setUser(user)
-        localStorage.setItem("token", token)
-        console.log("User created")
-        navigate("")
-    }
+            name : name,
+            account_type : accounttype,
+            company : company,
+        });
+        let user = response.data.user;
+        let token = response.data.token;
+        setUser(user);
+        localStorage.setItem("token", token);
+        api.defaults.headers.common["Authorization"] = `Token ${token}`;
+        console.log("User created");
+        navigate("/ProfilePage");
+      }
+      catch{
+        window.location.reload(true);
+      };
+    };
     return (
     <>
         <h1>This is a a Sign-Up page</h1>
@@ -38,19 +48,23 @@ export default function SignUpPage() {
           value={userName}
           onChange={(e) => setUserName(e.target.value)} 
           placeholder="UserName"   />
+          <input 
+          type="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)} 
+          placeholder="Name"   />
           {/* input to set password */}
           <input type="password"
           value={password}
           onChange={(e) => setpassword(e.target.value)} 
           placeholder="Password"   />
-         {/* input to set account type */}
-          <input type="account type"
-          placeholder="account type"
-          value={accounttype}
-          onChange={(e) => setAccountType(e.target.value)}/>
+          {/* input to select company */}
+          <input value={company}
+          onChange={(e)=> setcompany(e.target.value)}
+          placeholder="Company" />
           <input type="submit" />
        </form>
-  <button onClick={() => {navigate(`/sign-in`)}}>Sign-Up</button>
+  <button onClick={() => {navigate(`/sign-in`)}}>Sign-In</button>
     </>
     );
   };
