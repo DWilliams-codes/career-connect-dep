@@ -16,16 +16,23 @@ class Sign_Up(APIView):
     # Signs up users and creates respective account type, Refactor to Groups
     def post(self, request):
         # sets username to email
+        print(request.data)
         request.data["username"] = request.data.get("email")
+        email = request.data.get("email")
+        username = request.data["username"]
+        password = request.data.get("password")
+        name = request.data.get("name")
+        account_type = request.data.get("account_type")
         company = Company.objects.get_or_create(name = request.data.get("company"))
         # create new user
-        new_user = User.objects.create_user(**request.data)
+        new_user = User.objects.create_user(username=username,email=email, password=password, name=name, account_type=account_type)
         token = Token.objects.create(user = new_user)
+        print(new_user)
         # create applicant or recruiter based on account type
         if new_user.account_type == "applicant":
             Applicant.objects.create(email = new_user)
         elif new_user.account_type == "recruiter":
-            Recruiter.objects.create(email = new_user, company = company)
+            Recruiter.objects.create(email = new_user, company = company[0])
         return Response({"user": new_user.email, "account_type":new_user.account_type,"token":token.key}, status=HTTP_201_CREATED)
 class Log_In(APIView):
     def post(self, request):

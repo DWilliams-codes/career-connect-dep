@@ -8,6 +8,7 @@ export default function RecruiterSignUpPage() {
     const [userName,setUserName] = useState("");
     const [password, setpassword ] = useState("");
     const [company, setcompany] = useState("");
+    const [name, setName ] = useState("");
     const { setUser } = useContext(userContext);
     const accounttype = "recruiter";
     //  function to sign up user
@@ -19,9 +20,9 @@ export default function RecruiterSignUpPage() {
         let response = await api.post("users/sign-up/",{
             email : userName,
             password : password,
+            name : name,
             account_type : accounttype,
             company : company,
-            favorites : null,
         });
         let user = response.data.user;
         let token = response.data.token;
@@ -47,6 +48,11 @@ export default function RecruiterSignUpPage() {
           value={userName}
           onChange={(e) => setUserName(e.target.value)} 
           placeholder="UserName"   />
+          <input 
+          type="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)} 
+          placeholder="Name"   />
           {/* input to set password */}
           <input type="password"
           value={password}

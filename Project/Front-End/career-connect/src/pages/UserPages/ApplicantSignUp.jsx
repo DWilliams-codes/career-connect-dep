@@ -7,6 +7,7 @@ export default function ApplicantSignUpPage() {
     const navigate = useNavigate();
     const [userName,setUserName] = useState("");
     const [password, setpassword ] = useState("");
+    const [name, setName ] = useState("");
     const { setUser } = useContext(userContext);
     const accounttype = "applicant";
     //  function to sign up user
@@ -46,6 +47,11 @@ export default function ApplicantSignUpPage() {
           value={userName}
           onChange={(e) => setUserName(e.target.value)} 
           placeholder="UserName"   />
+           <input 
+          type="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)} 
+          placeholder="Name"   />
           {/* input to set password */}
           <input type="password"
           value={password}

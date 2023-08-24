@@ -58,7 +58,7 @@ export default function HomePage() {
             jobtitle={job.title} 
             company={job.company}
             location={job.location}
-            description={job.description}/>
+            description={job.job_description}/>
             </li>
           ))}
         </ul>

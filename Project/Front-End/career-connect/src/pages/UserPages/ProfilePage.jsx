@@ -18,12 +18,20 @@ export default function ProfilePage() {
    };
   
   };
+  console.log(user)
   
     return (
       <>
       {/* Placeholder */}
-        <h1>This is  {`${""}`}'s profile</h1>
-        <button disabled={''}onClick={logOut}>LogOut</button>
+      {user ? <div><h1>This is  {user}'s profile</h1>
+        <button disabled={user==null}onClick={logOut}>LogOut</button>
+        <ul>Favorites
+          <li>JOB CARD PLACEHOLDER</li>
+        </ul>
+     </div> : 
+        <div><h1>You are not Signed in</h1>
+        <button disabled={user==null}onClick={logOut}>LogOut</button>
+     </div> }
       </>
     );
   };

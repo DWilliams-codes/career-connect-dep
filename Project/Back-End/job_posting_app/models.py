@@ -10,9 +10,9 @@ class Job_Posting(models.Model):
     job_type = models.CharField(default="full-time")
     job_description = models.CharField()
     degree_type = models.CharField(default="none")
-    skill = models.ManyToManyField(Skill,related_name="job_postings")
+    skill = models.ManyToManyField(Skill,default=None,related_name="job_postings")
     salary = models.BigIntegerField()
-    location = models.CharField() # City
+    location = models.CharField() # City, State
     applicants = models.ManyToManyField(Applicant,default=None, related_name="favorites")
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     recruiter = models.ForeignKey(Recruiter, on_delete=models.CASCADE)

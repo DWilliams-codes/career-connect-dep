@@ -15,6 +15,7 @@ import json
 class All_Job_Postings(APIView):
     def get(self, request):
         jobs = Job_PostingSerializer(Job_Posting.objects.all().order_by("title"), many = True).data
+        #  adzuna_list = Job_PostingSerializer(Adzuna.get_jobs(), many=True).data
         adzuna_list = Adzuna.get_jobs()
         return Response(jobs+adzuna_list)
 # Returns a job posting by id or title

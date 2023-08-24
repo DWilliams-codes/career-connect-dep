@@ -46,12 +46,14 @@ export default function SignInPage() {
           value={userName}
           onChange={(e) => setUserName(e.target.value)} 
           placeholder="UserName"   />
+          <p>Test Account: testRecruiter@test.com</p>
           {/* input to set password */}
           <input type="password"
           value={password}
           onChange={(e) => setpassword(e.target.value)} 
           placeholder="Password"   />
           <input type="submit" onClick={signin} />
+          <p>Test Password: 12345</p>
        </form>
        {/*  button to signup page */}
   <button onClick={() => {navigate(`/accountTypePage`)}}>Register</button>
