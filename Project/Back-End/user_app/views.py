@@ -10,6 +10,7 @@ from rest_framework.status import HTTP_201_CREATED, HTTP_404_NOT_FOUND, HTTP_204
 from applicant_app.models import Applicant
 from recruiter_app.models import Recruiter
 from company_app.models import Company
+from education_app.models import Education
 
 # Create your views here.
 class Sign_Up(APIView):
@@ -23,14 +24,21 @@ class Sign_Up(APIView):
         password = request.data.get("password")
         name = request.data.get("name")
         account_type = request.data.get("account_type")
-        company = Company.objects.get_or_create(name = request.data.get("company"))
+        company_name = request.data.get("company")
+        education = request.data.get("education")
+        school = request.data.get("school")
+        field = request.data.get("field")
+        if company_name:
+            company = Company.objects.get_or_create(name = company_name)
+        if education:
+             education = Education.objects.get_or_create(degree_type=education,school_name = school, degree_field = field)
         # create new user
         new_user = User.objects.create_user(username=username,email=email, password=password, name=name, account_type=account_type)
         token = Token.objects.create(user = new_user)
         print(new_user)
         # create applicant or recruiter based on account type
         if new_user.account_type == "applicant":
-            Applicant.objects.create(email = new_user)
+            Applicant.objects.create(email = new_user, education = education[0])
         elif new_user.account_type == "recruiter":
             Recruiter.objects.create(email = new_user, company = company[0])
         return Response({"user": new_user.email, "account_type":new_user.account_type,"token":token.key}, status=HTTP_201_CREATED)

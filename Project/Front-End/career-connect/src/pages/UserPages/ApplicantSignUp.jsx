@@ -8,6 +8,9 @@ export default function ApplicantSignUpPage() {
     const [userName,setUserName] = useState("");
     const [password, setpassword ] = useState("");
     const [name, setName ] = useState("");
+    const [ education, setEducation ] = useState("");
+    const [ school , setschool ] = useState("");
+    const [ field, setfield ] = useState("");
     const { setUser } = useContext(userContext);
     const accounttype = "applicant";
     //  function to sign up user
@@ -20,8 +23,11 @@ export default function ApplicantSignUpPage() {
             email : userName,
             password : password,
             account_type : accounttype,
-            education : null,
-            skills : null,
+            name : name,
+            education : education,
+            field : field,
+            school : school,
+            skills : "NONE",
         });
         let user = response.data.user;
         let token = response.data.token;
@@ -57,6 +63,21 @@ export default function ApplicantSignUpPage() {
           value={password}
           onChange={(e) => setpassword(e.target.value)} 
           placeholder="Password"   />
+          <input 
+          type="text"
+          value={education}
+          onChange={(e) => setEducation(e.target.value)} 
+          placeholder="Highest Level of Education"   />
+          <input 
+          type="text"
+          value={field}
+          onChange={(e) => setfield(e.target.value)} 
+          placeholder="Degree Field"   />
+          <input 
+          type="text"
+          value={school}
+          onChange={(e) => setschool(e.target.value)} 
+          placeholder="Educational Institution"   />
           <input type="submit"/>
        </form>
   <button onClick={() => {navigate(`/sign-in`)}}>Sign-In</button>
