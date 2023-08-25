@@ -14,5 +14,5 @@ class Job_Posting(models.Model):
     salary = models.BigIntegerField()
     location = models.CharField() # City, State
     applicants = models.ManyToManyField(Applicant,default=None, related_name="favorites")
-    company = models.ForeignKey(Company, on_delete=models.CASCADE)
-    recruiter = models.ForeignKey(Recruiter, on_delete=models.CASCADE)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE,related_name="job_posting")
+    recruiter = models.ForeignKey(Recruiter, on_delete=models.CASCADE,related_name="job_posting")

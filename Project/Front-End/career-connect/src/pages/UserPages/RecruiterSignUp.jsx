@@ -31,9 +31,10 @@ export default function RecruiterSignUpPage() {
         api.defaults.headers.common["Authorization"] = `Token ${token}`;
         console.log("User created");
         navigate("/ProfilePage");
+        // window.location.reload(true);
       }
       catch{
-        window.location.reload(true);
+        window.alert("You Failed to Sign-Up");
       };
     };
     return (

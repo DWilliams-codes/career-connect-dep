@@ -4,9 +4,12 @@ from rest_framework.response import Response
 from .serializers import Job_PostingSerializer, Job_Posting
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_200_OK, HTTP_201_CREATED
+from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_200_OK, HTTP_201_CREATED,HTTP_401_UNAUTHORIZED
 from api_app.views import Adzuna
 import json
+from company_app.models import Company
+from recruiter_app.models import Recruiter
+from skills_app.models import Skill
 
 # Create your views here.
 # Refactor to ask for everything in one url request 
@@ -18,6 +21,29 @@ class All_Job_Postings(APIView):
         #  adzuna_list = Job_PostingSerializer(Adzuna.get_jobs(), many=True).data
         adzuna_list = Adzuna.get_jobs()
         return Response(jobs+adzuna_list)
+    # authentication_classes = [TokenAuthentication]
+    # permission_classes = [IsAuthenticated]
+    def post(self, request):
+        try:
+            authentication_classes = [TokenAuthentication]
+            permission_classes = [IsAuthenticated]
+            # Set user
+            job_posting_data = request.data
+            user = request.user
+            account_type = user.account_type
+            recruiter = Recruiter.objects.get(email = user.email)
+            company = recruiter.company
+            skill = request.data.get("skills")
+            skill_object = Skill.objects.filter(name=skill)
+            # Check users acount type
+            # Only allows Recruiters to post Job-Postings
+            if account_type == "recruiter":
+                newjob = Job_PostingSerializer(Job_Posting.objects.create(**job_posting_data, recruiter = recruiter, company=company, skills=skill_object))
+                return Response(newjob,status=HTTP_201_CREATED)
+            else:
+                return Response("You do not have access to post jobs!",status=HTTP_401_UNAUTHORIZED)
+        except:
+                return Response("Job Creation Failed",status=HTTP_401_UNAUTHORIZED)
 # Returns a job posting by id or title
 class A_Job_Posting(APIView):
     def get(self, request, id_or_title):
@@ -41,17 +67,26 @@ class A_Job_Posting(APIView):
         except:
             return Response(f"Invalid Job Posting {id_or_title}!",status=HTTP_400_BAD_REQUEST)
     def post(self, request, job_posting_data):
-        authentication_classes = [TokenAuthentication]
-        permission_classes = [IsAuthenticated]
-        # Set user
-        user = request.user
-        # Check users acount type
-        #  Only allows Recruiters to post Job-Postings
-        if user.account_type.lower() == "recruiter":
-            newjob = Job_PostingSerializer(Job_Posting.objects.create(**job_posting_data))
-            return Response(newjob,status=HTTP_201_CREATED)
-        else:
-            return Response("You do not have access to post jobs!",status=HTTP_400_BAD_REQUEST)
+        try:
+            authentication_classes = [TokenAuthentication]
+            permission_classes = [IsAuthenticated]
+            # Set user
+            print(job_posting_data)
+            user = request.user
+            account_type = user.account_type
+            recruiter = Recruiter.objects.get(email = user.email)
+            company = recruiter.company
+            skill = request.data.get("skills")
+            skill_object = Skill.objects.filter(name=skill)
+            # Check users acount type
+            # Only allows Recruiters to post Job-Postings
+            if account_type == "recruiter":
+                newjob = Job_PostingSerializer(Job_Posting.objects.create(**job_posting_data, recruiter = recruiter, company=company, skills=skill_object))
+                return Response(newjob,status=HTTP_201_CREATED)
+            else:
+                return Response("You do not have access to post jobs!",status=HTTP_401_UNAUTHORIZED)
+        except:
+                return Response("Job Creation Failed",status=HTTP_401_UNAUTHORIZED)
             
 # Returns all jobs with a specific skill
 class Job_Postings_by_Skills(APIView):

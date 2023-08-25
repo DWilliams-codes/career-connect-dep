@@ -32,6 +32,7 @@ export default function SignInPage() {
       localStorage.setItem("token", token);
       api.defaults.headers.common["Authorization"] = `Token ${token}`;
       navigate("/ProfilePage");
+      // window.location.reload(true);
     }
 
     return (
@@ -46,7 +47,7 @@ export default function SignInPage() {
           value={userName}
           onChange={(e) => setUserName(e.target.value)} 
           placeholder="UserName"   />
-          <p>Test Account: testRecruiter@test.com</p>
+          <p>Test Account: Recruiter@test.com</p>
           {/* input to set password */}
           <input type="password"
           value={password}

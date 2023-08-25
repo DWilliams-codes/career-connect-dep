@@ -13,19 +13,21 @@ export default function ProfilePage() {
    let response = await api.post("users/log-out/",{user : user});
    if(response.status === 204){
     localStorage.removeItem("token");
+    delete api.defaults.headers.common["Authorization"];
     setUser(null);
     navigate("/sign-in");
-   };
+   }
   
   };
-  console.log(user)
+ 
   
     return (
       <>
       {/* Placeholder */}
       {user ? <div><h1>This is  {user}'s profile</h1>
         <button disabled={user==null}onClick={logOut}>LogOut</button>
-        <ul>Favorites
+        <ul>Job Posting's
+        <button disabled={user==null}onClick={()=>{navigate("/CreateJobPosting")}}>Create Job Posting</button>
           <li>JOB CARD PLACEHOLDER</li>
         </ul>
      </div> : 
