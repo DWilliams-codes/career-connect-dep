@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import App from "./App.jsx";
+import { App } from "./App.jsx";
 import HomePage from "./pages/Homepage.jsx";
 import ProfilePage from "./pages/UserPages/ProfilePage.jsx";
 import Companies from "./pages/CompaniesPage.jsx";
@@ -9,7 +9,7 @@ import RecruiterSignUpPage from "./pages/UserPages/RecruiterSignUp.jsx";
 import ApplicantSignUpPage from "./pages/UserPages/ApplicantSignUp.jsx";
 import SelectAccountTypePage from "./pages/UserPages/AccountTypePage.jsx";
 import CreateJobPostingsPage from "./pages/CreateJobPostingPage.jsx";
-
+import UpdateJobPostingsPage from "./pages/UpdateJobsPage.jsx";
 const router = createBrowserRouter([
     {
         path: "/",
@@ -54,6 +54,10 @@ const router = createBrowserRouter([
                 path:"CreateJobPosting",
                 element: <CreateJobPostingsPage />,
             },
+            {
+                path:"UpdateJobPosting",
+                element: <UpdateJobPostingsPage />,
+            }
         ],
     },
 ]);

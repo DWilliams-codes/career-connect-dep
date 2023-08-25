@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 export const userContext = createContext();
 
 
-export default function App() {
+export function App() {
   // Pass Data on the lowest level it is  specifically needed
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ export default function App() {
       console.log(response.data);
       localStorage.setItem('user', response.data);
       setUser(response.data);
-      console.log(user);
+      console.log(response.data);
       // setLoading(false);
       console.log(token);
       if(user){
@@ -37,6 +37,7 @@ export default function App() {
     };
   }
 };
+
 let local_copy = localStorage.getItem('user');
   useEffect(() => {
     userAuthentication();
@@ -54,5 +55,6 @@ let local_copy = localStorage.getItem('user');
    </div>
   );
 };
+
 
 

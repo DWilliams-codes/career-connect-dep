@@ -2,7 +2,8 @@ import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { userContext } from "../../App";
 import { api } from "../../utilities";
-
+import JobCard from "../../components/JobCard";
+import { useEffect } from "react";
 
 //  PlaceHolder page
 export default function ProfilePage() {
@@ -20,8 +21,14 @@ export default function ProfilePage() {
    }
   
   };
- 
-  
+  const getuserfavorites = async(user) => {
+    // let response = await api.get(`applicants/${user}/`)
+    let response = await api.get(`applicants/1/`)
+    console.log(response)
+  };
+  useEffect(() => {
+    getuserfavorites();
+  },[]);
     return (
       <>
       {/* Placeholder */}
@@ -29,7 +36,7 @@ export default function ProfilePage() {
         <button disabled={user==null}onClick={logOut}>LogOut</button>
         <ul>Job Posting's
         <button disabled={user==null}onClick={()=>{navigate("/CreateJobPosting")}}>Create Job Posting</button>
-          <li>JOB CARD PLACEHOLDER</li>
+        <button disabled={user==null}onClick={()=>{navigate("/UpdateJobPosting")}}>Update Job Posting</button>
         </ul>
      </div> : 
         <div><h1>You are not Signed in</h1>
