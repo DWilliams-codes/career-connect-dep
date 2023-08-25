@@ -16,8 +16,7 @@ export default function App() {
   const userAuthentication = async() => {
     // get token from local storage
     let token = localStorage.getItem("token");
-    // setLoading(true)
-    console.log(token);
+    
     // checks for authorization on the back-end
     if(token){
       api.defaults.headers.common["Authorization"] = `Token ${token}`;
@@ -25,8 +24,8 @@ export default function App() {
       // sets user to user object
       // let copy = response.data;
       console.log(response.data);
-      // console.log(copy);
-      setUser(prev =>({...prev, [setUser]: user}));
+      localStorage.setItem('user', response.data);
+      setUser(response.data);
       console.log(user);
       // setLoading(false);
       console.log(token);
@@ -38,9 +37,10 @@ export default function App() {
     };
   }
 };
-
+let local_copy = localStorage.getItem('user');
   useEffect(() => {
     userAuthentication();
+    setUser(local_copy);
   },[]);
   return (
     <div>

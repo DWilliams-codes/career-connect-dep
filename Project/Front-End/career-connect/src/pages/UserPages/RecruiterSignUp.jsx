@@ -22,7 +22,7 @@ export default function RecruiterSignUpPage() {
             password : password,
             name : name,
             account_type : accounttype,
-            company : company,
+            company : company
         });
         let user = response.data.user;
         let token = response.data.token;

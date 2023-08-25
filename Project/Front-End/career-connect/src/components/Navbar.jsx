@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { userContext } from "../App";
-
 export default function Navbar() {
     const { user,setUser } = useContext(userContext);
  

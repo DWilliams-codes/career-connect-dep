@@ -13,6 +13,7 @@ export default function ProfilePage() {
    let response = await api.post("users/log-out/",{user : user});
    if(response.status === 204){
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     delete api.defaults.headers.common["Authorization"];
     setUser(null);
     navigate("/sign-in");
@@ -32,7 +33,7 @@ export default function ProfilePage() {
         </ul>
      </div> : 
         <div><h1>You are not Signed in</h1>
-        <button disabled={user==null}onClick={logOut}>LogOut</button>
+        <button onClick={logOut}>LogOut</button>
      </div> }
       </>
     );

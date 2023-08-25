@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { userContext } from "../../App";
@@ -8,7 +8,7 @@ export default function SignInPage() {
     const navigate = useNavigate();
     const [userName,setUserName] = useState("");
     const [password, setpassword ] = useState("");
-    const { setUser } = useContext(userContext);
+    const { user,setUser } = useContext(userContext);
     // gets response from backend api
     const signin = async(e) => {
       e.preventDefault()
@@ -23,23 +23,23 @@ export default function SignInPage() {
         navigate("/sign-in")
       })
       //  sets user
-      let user = response.data.user;
+      let user_data = response.data.user;
       let token = response.data.token;
-      console.log(user)
+      console.log(user_data.email)
       console.log(token)
-      setUser(user);
+      setUser(user_data.email);
+      console.log(user)
       // refactor for deployment
       localStorage.setItem("token", token);
       api.defaults.headers.common["Authorization"] = `Token ${token}`;
       navigate("/ProfilePage");
-      // window.location.reload(true);
     }
-
+ 
     return (
     <>
         <h1>This is a a Sign in page</h1>
         {/*  Form to call signin function */}
-        <form >
+        <form onSubmit={(e)=>signin(e)} >
           <h5>Sign-in</h5>
           {/* input to set username */}
           <input 
@@ -53,7 +53,7 @@ export default function SignInPage() {
           value={password}
           onChange={(e) => setpassword(e.target.value)} 
           placeholder="Password"   />
-          <input type="submit" onClick={signin} />
+          <input type="submit"/>
           <p>Test Password: 12345</p>
        </form>
        {/*  button to signup page */}

@@ -49,7 +49,7 @@ class Log_In(APIView):
             user = authenticate(**request.data)
             if user:
                 token, created = Token.objects.get_or_create(user = user)
-                return Response({"token":token.key,"user":user.email}, status=HTTP_200_OK)
+                return Response({"token":token.key,"user":{"email":user.email}}, status=HTTP_200_OK)
             else:
                  return Response("USER NOT SIGNED IN",status=HTTP_401_UNAUTHORIZED)
 # Log Out user
