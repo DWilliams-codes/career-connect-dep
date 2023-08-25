@@ -20,14 +20,13 @@ export default function App() {
     console.log(token);
     // checks for authorization on the back-end
     if(token){
-      // api.defaults.headers.common["Authorization"] = `Token ${token}`;
-      let response = await api.get("users/");
       api.defaults.headers.common["Authorization"] = `Token ${token}`;
+      let response = await api.get("users/");
       // sets user to user object
       // let copy = response.data;
       console.log(response.data);
       // console.log(copy);
-      setUser(response.data);
+      setUser(prev =>({...prev, [setUser]: user}));
       console.log(user);
       // setLoading(false);
       console.log(token);
@@ -36,13 +35,13 @@ export default function App() {
       } else {
       setUser(null);
       // setLoading(false);
-    }
+    };
   }
 };
 
   useEffect(() => {
     userAuthentication();
-  },[user]);
+  },[]);
   return (
     <div>
       <div>
