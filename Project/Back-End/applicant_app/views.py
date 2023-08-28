@@ -4,23 +4,28 @@ from rest_framework.response import Response
 from .models import Applicant
 from .serializers import ApplicantSerializer
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
+import json
 # Create your views here.
 # Returns All applicants
 class All_Applicants(APIView):
     def get(self,request):
-        applicants = ApplicantSerializer(Applicant.objects.all().order_by("name"), many = True)
+        applicants = ApplicantSerializer(Applicant.objects.all().order_by("id"), many = True)
+        print(applicants.data)
         return Response(applicants.data, status=HTTP_200_OK)
 # Returns a specific applicant by name
 class A_Applicant(APIView):
-    def get(self, request, id_or_name):
+    def get(self, request, id_or_email):
             # searches through database of applicants by name or id
             try:
-                if id_or_name.isnumeric():
-                    applicant = ApplicantSerializer(get_object_or_404(Applicant, id = id_or_name))
+                print(id_or_email)
+                applicant = Applicant.objects.get(id = id_or_email)
+                if applicant:
+                    serialized_applicant = ApplicantSerializer(applicant)
                 else:
-                    applicant = ApplicantSerializer(Applicant.objects.filter(name = id_or_name), many = True)
-                return Response([applicant.data],status=HTTP_200_OK)
-            except:
+                        serialized_applicant = ApplicantSerializer(Applicant.objects.filter(email= id_or_email), many = True).data
+                return Response(serialized_applicant,status=HTTP_200_OK)
+            except Exception as e:
+                print(e)
                 return Response("Invalid Applicant!",status=HTTP_400_BAD_REQUEST)
 # Returns all applicants with a specifc degree type (Bachelors, Associates, Masters, PHD)
 class Applicants_by_Education(APIView):
@@ -51,12 +56,3 @@ class Applicants_by_Skills(APIView):
             return Response(applicant_list, status=HTTP_200_OK)
          except:
            return Response("Invalid Applicant!",status=HTTP_400_BAD_REQUEST)
-# Return specific applicant by email
-class A_Applicant_by_email(APIView):
-    def get(self, request, email):
-        try:
-            # search for specific applicant by email address
-            applicant = ApplicantSerializer(get_object_or_404(Applicant, email = email)).data
-            return Response(applicant,status=HTTP_200_OK)
-        except:
-            return Response("Invalid Applicant!",status=HTTP_400_BAD_REQUEST)

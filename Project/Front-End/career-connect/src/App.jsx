@@ -8,42 +8,53 @@ import { useNavigate } from 'react-router-dom';
 export const userContext = createContext();
 
 
-export default function App() {
+export function App() {
   // Pass Data on the lowest level it is  specifically needed
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
+  // const [loading, setLoading] = useState(true);
   const userAuthentication = async() => {
-    // get tokent from local storage
+    // get token from local storage
     let token = localStorage.getItem("token");
+    
     // checks for authorization on the back-end
-    console.log(token)
     if(token){
       api.defaults.headers.common["Authorization"] = `Token ${token}`;
       let response = await api.get("users/");
       // sets user to user object
-      console.log(response);
+      // let copy = response.data;
+      console.log(response.data);
+      localStorage.setItem('user', response.data);
       setUser(response.data);
-      console.log(user);
-      navigate("");
-    }
-    else{
+      console.log(response.data);
+      // setLoading(false);
+      console.log(token);
+      if(user){
+        navigate("");
+      } else {
       setUser(null);
-    }
-  };
+      // setLoading(false);
+    };
+  }
+};
 
+let local_copy = localStorage.getItem('user');
   useEffect(() => {
     userAuthentication();
-    console.log(user);
+    setUser(local_copy);
   },[]);
   return (
     <div>
-      <Navbar />
+      <div>
       {/* passes user down to entire app */}
       <userContext.Provider value ={{user, setUser}}>
+     <Navbar />
      <Outlet />
      </userContext.Provider>
     </div>
+   </div>
   );
 };
+
 
 

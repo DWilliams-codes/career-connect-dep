@@ -42,7 +42,6 @@ export default function HomePage() {
     
     return (
         <><div className="searchbar">
-        <h1>This is the HomePage</h1>
         <h1>Search For Jobs</h1>
         {/* input field to update job search */}
        <input type="text" placeholder="Job Title"  value={jobtitle} onChange={jobtitlehandeler}/>

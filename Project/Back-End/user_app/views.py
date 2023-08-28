@@ -6,7 +6,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import authenticate
-from rest_framework.status import HTTP_201_CREATED, HTTP_404_NOT_FOUND, HTTP_204_NO_CONTENT, HTTP_200_OK
+from rest_framework.status import HTTP_201_CREATED, HTTP_404_NOT_FOUND, HTTP_204_NO_CONTENT, HTTP_200_OK, HTTP_401_UNAUTHORIZED
 from applicant_app.models import Applicant
 from recruiter_app.models import Recruiter
 from company_app.models import Company
@@ -49,9 +49,9 @@ class Log_In(APIView):
             user = authenticate(**request.data)
             if user:
                 token, created = Token.objects.get_or_create(user = user)
-                return Response({"token":token.key,"user":user.email}, status=HTTP_200_OK)
+                return Response({"token":token.key,"user":{"email":user.email}}, status=HTTP_200_OK)
             else:
-                 return Response("USER NOT SIGNED IN",status=HTTP_404_NOT_FOUND)
+                 return Response("USER NOT SIGNED IN",status=HTTP_401_UNAUTHORIZED)
 # Log Out user
 class Log_Out(APIView):
     # Athenticates the User and Logs them out
@@ -64,11 +64,14 @@ class Log_Out(APIView):
                     request.user.auth_token.delete()
                     return Response(status=HTTP_204_NO_CONTENT)
             except:
-                    return Response("USER NOT SIGNED IN")
+                    return Response("USER NOT SIGNED IN",status=HTTP_401_UNAUTHORIZED)
 class Info(APIView):
     # Authenticates User and Returns email
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        return Response({"email":request.user.email})
+        try:
+            return Response(request.user.email)
+        except:
+             return Response("USER NOT SIGNED IN", status=HTTP_401_UNAUTHORIZED)
