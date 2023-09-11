@@ -45,6 +45,7 @@ class Sign_Up(APIView):
 class Log_In(APIView):
     def post(self, request):
          # Authenticates the User an Logs them in
+            request.data["username"] = request.data["email"]
             print(request.data)
             user = authenticate(**request.data)
             if user:

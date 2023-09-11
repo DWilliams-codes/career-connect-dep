@@ -16,33 +16,27 @@ export function App() {
   const userAuthentication = async() => {
     // get token from local storage
     let token = localStorage.getItem("token");
-    
+    console.log(token)    
     // checks for authorization on the back-end
     if(token){
       api.defaults.headers.common["Authorization"] = `Token ${token}`;
       let response = await api.get("users/");
       // sets user to user object
       // let copy = response.data;
-      console.log(response.data);
       localStorage.setItem('user', response.data);
       setUser(response.data);
-      console.log(response.data);
       // setLoading(false);
-      console.log(token);
-      if(user){
-        navigate("");
-      } else {
-      setUser(null);
-      // setLoading(false);
-    };
+  }
+  else{
+    setUser(null)
+    navigate("sign-in")
   }
 };
 
-let local_copy = localStorage.getItem('user');
   useEffect(() => {
     userAuthentication();
-    setUser(local_copy);
   },[]);
+  console.log(user)
   return (
     <div>
       <div>

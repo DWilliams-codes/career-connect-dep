@@ -18,7 +18,7 @@ export default function UpdateJobPostingsPage(){
     // UPDATE JOB POSTING NEED TO PASS ID INTO URL
     const UpdateJobPosting = async (e) => {
             e.preventDefault();
-            let response = await api.post("job_postings/",{
+            let response = await api.put(`job_postings/${id}`,{
                 title : title,
                 job_type: job_type,
                 job_descrition : job_description,
@@ -34,7 +34,7 @@ export default function UpdateJobPostingsPage(){
         const getaJob = async(e) =>{
             e.preventDefault();
             let response = await api.get(`job_postings/${id}`);
-            print(response)
+            setloading(false)
         };
         
         

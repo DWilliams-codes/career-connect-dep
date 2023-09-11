@@ -21,14 +21,14 @@ export default function ProfilePage() {
    }
   
   };
-  const getuserfavorites = async(user) => {
-    // let response = await api.get(`applicants/${user}/`)
-    let response = await api.get(`applicants/1/`)
-    console.log(response)
-  };
-  useEffect(() => {
-    getuserfavorites();
-  },[]);
+  // const getuserfavorites = async(user) => {
+  //   // let response = await api.get(`applicants/${user}/`)
+  //   let response = await api.get(`applicants/1/`)
+  //   // console.log(response)
+  // };
+  // useEffect(() => {
+  //   getuserfavorites();
+  // },[]);
     return (
       <>
       {/* Placeholder */}

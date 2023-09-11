@@ -29,7 +29,7 @@ export default function CreateJobPostingsPage(){
             console.log(e)
              alert("Didnt Create Job")
             })
-        }
+        };
 
     return(<div>
         <form onSubmit={(e)=>createJobPosting(e)}>
