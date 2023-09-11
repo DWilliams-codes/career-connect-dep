@@ -8,6 +8,8 @@ urlpatterns = [
     path("", All_Job_Postings.as_view(), name="all_job_postings"),
     # Returns a job posting by ID or all job posting with that name, Post to create job postings
     path("<int_or_str:id_or_title>/",A_Job_Posting.as_view(), name="a_job_posting"),
+    # return by search and location
+     path("<int_or_str:id_or_title>/$where=<str:location>/",A_Job_Posting.as_view(), name="a_job_posting"),
     # Returns all job postings that have a specific skill
     path("skill/<str:job_skill>/",Job_Postings_by_Skills.as_view(), name="jobs_by_skill"),
     # Returns job posting with specific degree requirement

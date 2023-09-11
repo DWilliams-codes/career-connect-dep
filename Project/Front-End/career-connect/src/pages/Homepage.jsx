@@ -23,15 +23,29 @@ export default function HomePage() {
     }
     // gets all jobs
     const getalljobs= async(jobtitle="") =>{
-      try{
-        // Pings Api
-        const response = await axios.get(`http://localhost:8000/api/v1/job_postings/${jobtitle.replace(" ","")}`,{mode:'cors'})
-      .then((response) => {
-        setjobs(response.data)
-      });
+      if(location == ''){
+        try{
+          // Pings Api
+          const response = await axios.get(`http://localhost:8000/api/v1/job_postings/${jobtitle.replace(" ","")}`,{mode:'cors'})
+        .then((response) => {
+          setjobs(response.data)
+        });
+        }
+        catch (e){
+          console.log(e)
+        }
       }
-      catch (e){
-        console.log(e)
+      else{
+        console.log(location)
+        try {
+          const response = await axios.get(`http://localhost:8000/api/v1/job_postings/${jobtitle.replace(" ","")}/$where=${location.replace(" ","")}`,{mode:'cors'})
+          .then((response) => {
+            setjobs(response.data)
+          });
+        } catch (error) {
+          console.log(error)
+        }
+        
       }
     };
     useEffect(() => {
