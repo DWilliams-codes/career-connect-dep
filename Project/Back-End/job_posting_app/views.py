@@ -11,6 +11,7 @@ from company_app.models import Company
 from recruiter_app.models import Recruiter
 from skills_app.models import Skill
 from applicant_app.models import Applicant
+from user_app.models import User
 # Create your views here.
 # Refactor to ask for everything in one url request 
 # Returns all job postings
@@ -21,20 +22,20 @@ class All_Job_Postings(APIView):
         #  adzuna_list = Job_PostingSerializer(Adzuna.get_jobs(), many=True).data
         adzuna_list = Adzuna.get_jobs()
         return Response(jobs+adzuna_list)
-    # authentication_classes = [TokenAuthentication]
-    # permission_classes = [IsAuthenticated]
     def post(self, request):
+        # authentication_classes = [TokenAuthentication]
+        # permission_classes = [IsAuthenticated]
         try:
-            authentication_classes = [TokenAuthentication]
-            permission_classes = [IsAuthenticated]
             # Set user
             job_posting_data = request.data
+            # user = User.objects.get(request.user)
             user = request.user
+            print(user)
             account_type = user.account_type
             recruiter = Recruiter.objects.get(email = user.email)
             company = recruiter.company
             skill = request.data.get("skills")
-            skill_object = Skill.objects.filter(name=skill)
+            skill_object = Skill.objects.get_or_create(name=skill)
             # Check users acount type
             # Only allows Recruiters to post Job-Postings
             if account_type == "recruiter":
@@ -42,12 +43,13 @@ class All_Job_Postings(APIView):
                 return Response(newjob,status=HTTP_201_CREATED)
             else:
                 return Response("You do not have access to post jobs!",status=HTTP_401_UNAUTHORIZED)
-        except:
+        except Exception as e:
+                print(request.data)
+                print(e)
                 return Response("Job Creation Failed",status=HTTP_401_UNAUTHORIZED)
 # Returns a job posting by id or title
 class A_Job_Posting(APIView):
     def get(self, request, id_or_title):
-        print(type(id_or_title))
         try:
             # Check if input is id or a title
                 if type(id_or_title) == int:
@@ -99,7 +101,7 @@ class A_Job_Posting(APIView):
             else:
                 return Response("You do not have access to post jobs!",status=HTTP_401_UNAUTHORIZED)
         except:
-                return Response("Job Creation Failed",status=HTTP_401_UNAUTHORIZED)
+                return Response("Job Update Failed",status=HTTP_401_UNAUTHORIZED)
             
 # Returns all jobs with a specific skill
 class Job_Postings_by_Skills(APIView):
@@ -166,3 +168,22 @@ class Job_Postings_by_location(APIView):
 
 def urlfilter(unfilteredURL):
     return(unfilteredURL.replace(" ","%20"))
+# class A_Job_Posting(APIView):
+#     def get(self, request, id_or_title):
+#         try:
+#             # Check if input is id or a title
+#             if id_or_title.isnumeric():
+#                 job_posting = Job_PostingSerializer(get_object_or_404(Job_Posting, id = id_or_title)).data
+#             else:
+#                 # Searches through jobs on local database
+#                 job_posting = Job_Posting.objects.filter(title = id_or_title).values_list()
+#                 # If no job postings with that title set job_postings to empty list
+#                 if job_posting == None:
+#                     job_posting=[]
+#                 # Changes the value to fit the url
+#                 url_name = id_or_title.replace(" ","%20")
+#                 # Pings Adzuna api to get list of jobs
+#                 adzuna_list = Adzuna.get_jobs(parameters=f"&what={url_name}")
+#                 # Add job listing query set to adzuna list
+#                 adzuna_list+=job_posting
+#             return Response(adzuna_list,status=HTTP_200_OK)
