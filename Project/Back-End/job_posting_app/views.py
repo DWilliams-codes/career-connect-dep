@@ -49,11 +49,18 @@ class All_Job_Postings(APIView):
                 return Response("Job Creation Failed",status=HTTP_401_UNAUTHORIZED)
 # Returns a job posting by id or title
 class A_Job_Posting(APIView):
-    def get(self, request, id_or_title):
+    def get(self, request, **params):
+        id_or_title = params["id_or_title"]
         try:
+            location = params["location"]
+        except:
+            location = ""
+        print(location)
+        try: 
             # Check if input is id or a title
+                job_posting = None
                 if type(id_or_title) == int:
-                    job_posting = Job_PostingSerializer(Job_Posting.objects.get(id=id_or_title)).data
+                    job_posting = Job_Posting.objects.filter(id=id_or_title).values_list()
                 if job_posting == None:
                     # Searches through jobs on local database
                     job_posting = Job_Posting.objects.filter(title = id_or_title).values_list()
@@ -61,12 +68,15 @@ class A_Job_Posting(APIView):
                 if job_posting == None:
                     job_posting=[]
                 # Changes the value to fit the url
-                if type(id_or_title) == 'str':
+                if type(id_or_title) == str:
                     url_name = f'&what={id_or_title.replace(" ","%20")}'
-                else:
-                    url_name = id_or_title
+                    if location:
+                        url_name+= f'&where={location.replace(" ","%20")}'
                 # Pings Adzuna api to get list of jobs
-                adzuna_list = Adzuna.get_jobs(parameters=f"{url_name}")
+                    print(url_name)
+                    adzuna_list = Adzuna.get_jobs(parameters=f"{url_name}")
+                else:
+                    adzuna_list = []
                 # Add job listing query set to adzuna list
                 adzuna_list+=job_posting
                 return Response(adzuna_list,status=HTTP_200_OK)
