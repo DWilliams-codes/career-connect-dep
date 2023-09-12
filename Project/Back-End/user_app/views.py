@@ -17,14 +17,19 @@ class Sign_Up(APIView):
     # Signs up users and creates respective account type, Refactor to Groups
     def post(self, request):
         # sets username to email
-        print(request.data)
         request.data["username"] = request.data.get("email")
+        # sets email
         email = request.data.get("email")
+        # set username and password
         username = request.data["username"]
         password = request.data.get("password")
+        # set name
         name = request.data.get("name")
+        # set account type
         account_type = request.data.get("account_type")
+        # set company name
         company_name = request.data.get("company")
+        # set education, school and field
         education = request.data.get("education")
         school = request.data.get("school")
         field = request.data.get("field")

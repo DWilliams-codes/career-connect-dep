@@ -35,13 +35,20 @@ class All_Job_Postings(APIView):
             recruiter = Recruiter.objects.get(email = user)
             # set company for posting
             company = recruiter.company
+            # set title
             title = job_posting_data.get("title")
+            # set job type
             job_type = job_posting_data.get("job_type")
+            # set job description
             job_description = job_posting_data.get("job_description")
+            # set degree type
             degree_type = job_posting_data.get("degree_type")
+            # grabs skill and set to skill objects
             skill = job_posting_data.get("skills","")
             skill_object = Skill.objects.get_or_create(name=skill)[0]
+            # set salary
             salary = job_posting_data.get("salary")
+            # set location
             location = job_posting_data.get("location")
             # Check users acount type
             # Only allows Recruiters to post Job-Postings
@@ -81,7 +88,6 @@ class A_Job_Posting(APIView):
                     if location:
                         url_name+= f'&where={location.replace(" ","%20")}'
                 # Pings Adzuna api to get list of jobs
-                    print(url_name)
                     adzuna_list = Adzuna.get_jobs(parameters=f"{url_name}")
                 else:
                     adzuna_list = []
@@ -103,8 +109,11 @@ class A_Job_Posting(APIView):
             recruiter = Recruiter.objects.get(email = user)
             # set company for posting
             company = recruiter.company
+            # set title
             title = job_posting_data.get("title")
+            # set job type
             job_type = job_posting_data.get("job_type")
+            # set job description
             job_description = job_posting_data.get("job_description")
             degree_type = job_posting_data.get("degree_type")
             skill = job_posting_data.get("skills","")
@@ -116,9 +125,12 @@ class A_Job_Posting(APIView):
                 newjob = Job_Posting.objects.get(id=id_or_title)
                 newjob.company = company
                 newjob.title = title
+                newjob.job_description = job_description
+                newjob.job_type = job_type
                 newjob.skill.set([skill_object])
                 newjob.degree_type = degree_type
                 newjob.salary = salary
+                newjob.location = location
                 serialized_newjob = Job_PostingSerializer(newjob).data
                 return Response(serialized_newjob,status=HTTP_201_CREATED)
             else:
@@ -189,7 +201,7 @@ class Job_Postings_by_location(APIView):
             return Response(adzuna_list,status=HTTP_200_OK)
         except:
             return Response("Invalid Job Posting!",status=HTTP_400_BAD_REQUEST)
-
+# for refactoring
 def urlfilter(unfilteredURL):
     return(unfilteredURL.replace(" ","%20"))
 # class A_Job_Posting(APIView):

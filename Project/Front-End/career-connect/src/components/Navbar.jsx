@@ -11,7 +11,7 @@ export default function Navbar() {
         {/* home button functionality */}
         <Link to= ""><h1>Career Connect</h1></Link>
         {/* link to companies page */}
-        <Link to="/companies">Find Companies</Link>
+        {/* <Link to="/companies">Find Companies</Link> */}
          {/*  link to profilepage */}
          <Link to="/ProfilePage">Profile</Link>
          <button onClick={()=>{navigate("/UpdateJobPosting")}}>Update Job Posting</button>
