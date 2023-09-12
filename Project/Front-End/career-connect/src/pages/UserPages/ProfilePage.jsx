@@ -34,10 +34,9 @@ export default function ProfilePage() {
       {/* Placeholder */}
       {user ? <div><h1>This is  {user}'s profile</h1>
         <button disabled={user==null}onClick={logOut}>LogOut</button>
-        <ul>Job Posting's
         <button disabled={user==null}onClick={()=>{navigate("/CreateJobPosting")}}>Create Job Posting</button>
         <button disabled={user==null}onClick={()=>{navigate("/UpdateJobPosting")}}>Update Job Posting</button>
-        </ul>
+        <ul>Job Posting's</ul>
      </div> : 
         <div><h1>You are not Signed in</h1>
         <button onClick={logOut}>LogOut</button>
