@@ -12,6 +12,7 @@ from recruiter_app.models import Recruiter
 from skills_app.models import Skill
 from applicant_app.models import Applicant
 from user_app.models import User
+from django.contrib.auth import authenticate
 # Create your views here.
 # Refactor to ask for everything in one url request 
 # Returns all job postings
@@ -28,25 +29,33 @@ class All_Job_Postings(APIView):
         try:
             # Set user
             job_posting_data = request.data
-            # user = User.objects.get(request.user)
-            user = request.user
-            print(user)
-            account_type = user.account_type
-            recruiter = Recruiter.objects.get(email = user.email)
+            # get user object
+            user = User.objects.get(email=job_posting_data["user"])
+            # check if the user is a recruiter if yes returns user objects
+            recruiter = Recruiter.objects.get(email = user)
+            # set company for posting
             company = recruiter.company
-            skill = request.data.get("skills")
-            skill_object = Skill.objects.get_or_create(name=skill)
+            title = job_posting_data.get("title")
+            job_type = job_posting_data.get("job_type")
+            job_description = job_posting_data.get("job_description")
+            degree_type = job_posting_data.get("degree_type")
+            skill = job_posting_data.get("skills","")
+            skill_object = Skill.objects.get_or_create(name=skill)[0]
+            salary = job_posting_data.get("salary")
+            location = job_posting_data.get("location")
             # Check users acount type
             # Only allows Recruiters to post Job-Postings
-            if account_type == "recruiter":
-                newjob = Job_PostingSerializer(Job_Posting.objects.create(**job_posting_data, recruiter = recruiter, company=company, skills=skill_object))
-                return Response(newjob,status=HTTP_201_CREATED)
+            if recruiter:
+                newjob = Job_Posting.objects.create(title=title, job_type=job_type,job_description=job_description,degree_type=degree_type,salary=salary,location=location, recruiter=recruiter, company=company)
+                newjob.skill.set([skill_object])
+                serialized_newjob = Job_PostingSerializer(newjob).data
+                return Response(serialized_newjob,status=HTTP_201_CREATED)
             else:
                 return Response("You do not have access to post jobs!",status=HTTP_401_UNAUTHORIZED)
         except Exception as e:
-                print(request.data)
+                # print(job_posting_data)
                 print(e)
-                return Response("Job Creation Failed",status=HTTP_401_UNAUTHORIZED)
+                return Response("Job Creation Failed",status=HTTP_400_BAD_REQUEST)
 # Returns a job posting by id or title
 class A_Job_Posting(APIView):
     def get(self, request, **params):
@@ -55,7 +64,6 @@ class A_Job_Posting(APIView):
             location = params["location"]
         except:
             location = ""
-        print(location)
         try: 
             # Check if input is id or a title
                 job_posting = None
@@ -87,7 +95,7 @@ class A_Job_Posting(APIView):
             authentication_classes = [TokenAuthentication]
             permission_classes = [IsAuthenticated]
             # Set user
-            user = request.user
+            user = User.objects.get(email = user)
             account_type = user.account_type
             recruiter = Recruiter.objects.get(email = user.email)
             company = recruiter.company
