@@ -90,36 +90,42 @@ class A_Job_Posting(APIView):
                 return Response(adzuna_list,status=HTTP_200_OK)
         except Exception as e:
             return Response(f"Invalid Job Posting {id_or_title}! Exception:{e}",status=HTTP_400_BAD_REQUEST)
-    def put(self, request, job_posting_id):
+    def put(self, request, id_or_title):
         try:
-            authentication_classes = [TokenAuthentication]
-            permission_classes = [IsAuthenticated]
+            #refactor to keep applicants
+            # authentication_classes = [TokenAuthentication]
+            # permission_classes = [IsAuthenticated]
             # Set user
-            user = User.objects.get(email = user)
-            account_type = user.account_type
-            recruiter = Recruiter.objects.get(email = user.email)
+            job_posting_data = request.data
+            # get user object
+            user = User.objects.get(email=job_posting_data["user"])
+            # check if the user is a recruiter if yes returns user objects
+            recruiter = Recruiter.objects.get(email = user)
+            # set company for posting
             company = recruiter.company
-            title = request.data.get("title")
-            skill = request.data.get("skills")
-            skill_object = Skill.objects.filter(name=skill)
-            degree_type = request.data.get("degree_type")
-            salary = request.data.get("salary")
-            applicants = request.data.get("applicants")
-            applicant_object = Applicant.objects.filter(email=applicants)
+            title = job_posting_data.get("title")
+            job_type = job_posting_data.get("job_type")
+            job_description = job_posting_data.get("job_description")
+            degree_type = job_posting_data.get("degree_type")
+            skill = job_posting_data.get("skills","")
+            skill_object = Skill.objects.get_or_create(name=skill)[0]
+            salary = job_posting_data.get("salary")
+            location = job_posting_data.get("location")
 
-            if account_type == "recruiter":
-                newjob = Job_Posting.objects.get(id=job_posting_id)
+            if recruiter:
+                newjob = Job_Posting.objects.get(id=id_or_title)
                 newjob.company = company
                 newjob.title = title
-                newjob.skill += skill_object
+                newjob.skill.set([skill_object])
                 newjob.degree_type = degree_type
                 newjob.salary = salary
-                newjob.applicants += applicant_object
-                return Response(newjob,status=HTTP_201_CREATED)
+                serialized_newjob = Job_PostingSerializer(newjob).data
+                return Response(serialized_newjob,status=HTTP_201_CREATED)
             else:
                 return Response("You do not have access to post jobs!",status=HTTP_401_UNAUTHORIZED)
-        except:
-                return Response("Job Update Failed",status=HTTP_401_UNAUTHORIZED)
+        except Exception as e:
+                print(e)
+                return Response("Job Update Failed",status=HTTP_400_BAD_REQUEST)
             
 # Returns all jobs with a specific skill
 class Job_Postings_by_Skills(APIView):
