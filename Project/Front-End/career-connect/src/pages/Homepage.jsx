@@ -36,7 +36,6 @@ export default function HomePage() {
         }
       }
       else{
-        console.log(location)
         try {
           const response = await axios.get(`http://localhost:8000/api/v1/job_postings/${jobtitle.replace(" ","")}/$where=${location.replace(" ","")}`,{mode:'cors'})
           .then((response) => {

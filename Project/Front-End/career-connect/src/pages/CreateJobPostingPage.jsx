@@ -17,9 +17,10 @@ export default function CreateJobPostingsPage(){
     const createJobPosting = async (e) => {
             e.preventDefault();
             let response = await api.post("job_postings/",{
+                user : user,
                 title : title,
                 job_type: job_type,
-                job_descrition : job_description,
+                job_description : job_description,
                 degree_type : degree_type,
                 skills : skills,
                 salary : salary,
