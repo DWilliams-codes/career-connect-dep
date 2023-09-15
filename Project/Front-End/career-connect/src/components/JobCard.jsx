@@ -11,7 +11,7 @@ export default function JobCard({jobtitle, company, location, description}) {
         {/* placeholder will add to list of favorites on user profile */}
         <button onClick={() => {navigate(``)}}>Add to favorites</button>
         {/* will link to application */}
-        <button onClick={() => {navigate(``)}}>Apply</button>
+        <button onClick={() => {navigate(`Application`)}}>Apply</button>
         <div>
           <p>{description}</p>
         </div>

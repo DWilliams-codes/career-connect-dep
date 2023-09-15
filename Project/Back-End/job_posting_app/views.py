@@ -201,6 +201,10 @@ class Job_Postings_by_location(APIView):
             return Response(adzuna_list,status=HTTP_200_OK)
         except:
             return Response("Invalid Job Posting!",status=HTTP_400_BAD_REQUEST)
+
+
+
+
 # for refactoring
 def urlfilter(unfilteredURL):
     return(unfilteredURL.replace(" ","%20"))

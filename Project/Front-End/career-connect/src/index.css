@@ -1,35 +1,47 @@
+/* Improved Bootstrap Navigation */
 nav {
+  background-color: #007bff;
+  padding: 10px 20px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
   display: flex;
-  justify-content: space-between; /* Align items horizontally with space between */
+  justify-content: space-between;
   align-items: center;
-  background-color: lightblue;
-  padding: 10px 20px; /* Add padding for better spacing */
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
 }
 
 nav a {
   text-decoration: none;
-  color: #333; /* Adjust text color for better contrast */
-  font-weight: 600; /* Add some font weight for readability */
-  font-size: 1.1rem; /* Adjust font size for better visibility */
-  transition: color 0.3s ease; /* Smooth color transition on hover */
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: color 0.3s ease;
+  margin-right: 15px;
 }
 
 nav a:hover {
-  color: #007bff; /* Change text color on hover for interactivity */
+  color: #0056b3;
 }
-ul{
+
+/* Improved Unordered List (ul) */
+ul {
   list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
+
+/* Improved Job Card */
 .job-card {
-  align-items: center;
-  background-color: #dbeff7;
-  border: 1px solid #ffffff;
+  background-color: #cee5f7;
+  border: 1px solid #ccc;
   border-radius: 8px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   padding: 20px;
   margin: 10px;
-  transition: transform 0.2s ease-in-out;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
 .job-card:hover {
@@ -81,53 +93,148 @@ ul{
   background-color: #0056b3;
 }
 
-        
-    
-
+/* Improved Search Bar */
 .searchbar {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: lightblue;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: sticky;
+  top: 48px; /* Adjust this value as needed to keep it below the navbar */
 }
 
 .searchbar input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1rem;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
 }
 
 .searchbar button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-    cursor: pointer;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
 }
 
 .searchbar button:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }
 
-.company-card{
-    color: #000000;
-    font-family: "Iceland-Regular", Helvetica;
-    line-height: normal;
-    text-align: center;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    border: 1px solid black;
-    border-radius: 8px;
-    width: 300px;
-    height: 200px;
-    
+/* Improved Company Card */
+.company-card {
+  background-color: #fff;
+  color: #333;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  justify-content: space-around;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 300px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+}
+/* Reset some default styles for consistency */
+body, h1, h2, h3, p, ul, li, button, input, textarea {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body background and font styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f8f8f8;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Sign-in form container */
+.signin-container {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  padding: 40px;
+  max-width: 400px;
+  width: 100%;
+}
+
+/* Form elements */
+.signin-container h1 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.signin-container h5 {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.signin-container label {
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.signin-container input[type="email"],
+.signin-container input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.signin-container input[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.signin-container input[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.signin-container p {
+  font-size: 0.9rem;
+  color: #555;
+  margin-top: 10px;
+}
+
+.signin-container button {
+  background-color: transparent;
+  border: none;
+  color: #007bff;
+  font-size: 1rem;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-top: 20px;
+}
+
+.signin-container button:hover {
+  color: #0056b3;
 }

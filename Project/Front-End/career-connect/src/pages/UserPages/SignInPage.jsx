@@ -25,10 +25,7 @@ export default function SignInPage() {
       //  sets user
       let user_data = response.data.user;
       let token = response.data.token;
-      console.log(user_data.email)
-      console.log(token)
       setUser(user_data.email);
-      console.log(user)
       // refactor for deployment
       localStorage.setItem("token", token);
       api.defaults.headers.common["Authorization"] = `Token ${token}`;
