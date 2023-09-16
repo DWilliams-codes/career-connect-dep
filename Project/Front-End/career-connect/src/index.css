@@ -1,6 +1,6 @@
 /* Improved Bootstrap Navigation */
 nav {
-  background-color: #007bff;
+  background-color: #A5D4FF;
   padding: 10px 20px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   position: fixed;
@@ -15,11 +15,12 @@ nav {
 
 nav a {
   text-decoration: none;
-  color: #fff;
+  color: #000000;
   font-weight: 600;
   font-size: 1.1rem;
   transition: color 0.3s ease;
   margin-right: 15px;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 
 nav a:hover {
@@ -65,6 +66,7 @@ ul {
   font-size: 1rem;
   margin-bottom: 0.5rem;
   color: #777;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .job-card .job-details {
