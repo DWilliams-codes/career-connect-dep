@@ -201,9 +201,24 @@ class Job_Postings_by_location(APIView):
             return Response(adzuna_list,status=HTTP_200_OK)
         except:
             return Response("Invalid Job Posting!",status=HTTP_400_BAD_REQUEST)
-
-
-
+class Jobs_Favorites_List(APIView):
+    def get(self, request):
+        try:
+            email = request.data
+            print(email)
+            try:
+                recruiter_object = Recruiter.objects.get(email=email)
+            except:
+                applicant_object = Applicant.objects.get(email=email)
+            if recruiter_object:
+                jobs_data = Job_PostingSerializer(Job_Posting.objects.filter(recruiter = recruiter_object)).data
+                return Response(jobs_data,status=HTTP_200_OK)
+            else:
+                jobs_data = Job_PostingSerializer(Job_Posting.objects.filter(applicants=applicant_object)).data
+                return Response(jobs_data,status=HTTP_200_OK)
+        except Exception as e:
+            print(e)
+            return Response("Error returning jobs",status=HTTP_400_BAD_REQUEST)
 
 # for refactoring
 def urlfilter(unfilteredURL):
