@@ -25,10 +25,7 @@ export default function SignInPage() {
       //  sets user
       let user_data = response.data.user;
       let token = response.data.token;
-      console.log(user_data.email)
-      console.log(token)
       setUser(user_data.email);
-      console.log(user)
       // refactor for deployment
       localStorage.setItem("token", token);
       api.defaults.headers.common["Authorization"] = `Token ${token}`;
@@ -36,7 +33,8 @@ export default function SignInPage() {
     }
  
     return (
-    <>
+    <div className="container container-custom">
+  <div className="sign-in-container">
         <h1>This is a a Sign in page</h1>
         {/*  Form to call signin function */}
         <form onSubmit={(e)=>signin(e)} >
@@ -58,6 +56,7 @@ export default function SignInPage() {
        </form>
        {/*  button to signup page */}
   <button onClick={() => {navigate(`/accountTypePage`)}}>Register</button>
-    </>
+  </div>
+</div>
     );
   };

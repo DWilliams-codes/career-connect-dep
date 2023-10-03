@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from .models import Recruiter
 from .serializers import RecruiterSerializer
 from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_200_OK
-
+from user_app.models import User
 # Create your views here.
 class All_Recruiters(APIView):
     def get(self, request):
@@ -39,3 +39,15 @@ class Recruiter_by_Company(APIView):
             return Response(recruiters,status=HTTP_200_OK)
         except:
             return Response("Invalid Recruiter!",status=HTTP_400_BAD_REQUEST)
+class Recruiter_Favorites(APIView):
+    def get(self,request):
+        try:
+            # set email fo current user
+            email = request.user
+            user = User.objects.get(email=email)
+            favorites = RecruiterSerializer(Recruiter.objects.get(email=user).favorites).data
+            return Response(favorites, status=HTTP_200_OK)
+        except Exception as e:
+            print(e)
+            return Response("Error Returning Favorites", status=HTTP_400_BAD_REQUEST)
+

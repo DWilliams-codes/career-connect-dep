@@ -7,7 +7,7 @@ import axios from "axios";
 export default function HomePage() {
     const navigate = useNavigate();
     //  This is likely a behavior that can be specify within the inputs onChange field
-    // set jobs varible
+    // set jobs variable
     const [jobs, setjobs] = useState("")
     // set location variable
     const [location, setlocation] = useState("")

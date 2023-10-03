@@ -10,6 +10,7 @@ import ApplicantSignUpPage from "./pages/UserPages/ApplicantSignUp.jsx";
 import SelectAccountTypePage from "./pages/UserPages/AccountTypePage.jsx";
 import CreateJobPostingsPage from "./pages/CreateJobPostingPage.jsx";
 import UpdateJobPostingsPage from "./pages/UpdateJobsPage.jsx";
+import JobApplication from "./pages/ApplicationsPage.jsx";
 const router = createBrowserRouter([
     {
         path: "/",
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
             {
                 path:"UpdateJobPosting",
                 element: <UpdateJobPostingsPage />,
+            },
+            {
+                path:"Application",
+                element: <JobApplication />,
             }
         ],
     },
