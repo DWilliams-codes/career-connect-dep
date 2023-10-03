@@ -33,7 +33,8 @@ export default function SignInPage() {
     }
  
     return (
-    <>
+    <div className="container container-custom">
+  <div className="sign-in-container">
         <h1>This is a a Sign in page</h1>
         {/*  Form to call signin function */}
         <form onSubmit={(e)=>signin(e)} >
@@ -55,6 +56,7 @@ export default function SignInPage() {
        </form>
        {/*  button to signup page */}
   <button onClick={() => {navigate(`/accountTypePage`)}}>Register</button>
-    </>
+  </div>
+</div>
     );
   };

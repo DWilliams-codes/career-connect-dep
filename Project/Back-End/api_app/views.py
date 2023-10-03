@@ -4,17 +4,18 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 import pprint
 from datetime import datetime
-from personal_project_env.api_keys import api_key, app_id
 from job_posting_app.models import Job_Posting
 from job_posting_app.serializers import Job_PostingSerializer
+from dotenv import load_dotenv
+import os
 # Create your views here.
-# Ask about best way to intergrate data from Adzuna APIs
 # Refactor to Grab Multiple Pages of Data
 pp = pprint.PrettyPrinter(indent=2)
+api_key = os.environ.get("api_key")
+app_id = os.environ.get("app_id")
 # I would break this function up a bit and follow the Single Responsibility Principle to isolate behavior and help debugging later on in your projects life
 class Adzuna(APIView):
     def get_jobs(parameters=" "):
-        print(parameters)
         try:
             # API Call
             endpoint = f"https://api.adzuna.com/v1/api/jobs/us/search/1?app_id={app_id}&app_key={api_key}{parameters}&results_per_page=50"
