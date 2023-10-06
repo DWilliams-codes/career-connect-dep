@@ -22,14 +22,14 @@ export default function ProfilePage() {
    }
   
   };
-  const getuserfavorites = async() => {
-    // gets list of all users created or applied jobs
-    setUser(user);
-    let response = await api.get(`job_postings/usersjobs`,{user :user})
-    .then((response) => {
+  const getuserfavorites = async () => {
+    try {
+      const response = await api.get(`api/applicants/${user.id}/job_postings/`);
       setjobs(response.data);
-    });
-    };
+    } catch (error) {
+      console.log(error);
+    }
+  };
   
   useEffect(() => {
     getuserfavorites();
