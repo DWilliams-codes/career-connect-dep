@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from .serializers import Job_PostingSerializer, Job_Posting
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_200_OK, HTTP_201_CREATED,HTTP_401_UNAUTHORIZED
+from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_200_OK, HTTP_201_CREATED,HTTP_401_UNAUTHORIZED, HTTP_404_NOT_FOUND
 from api_app.views import Adzuna
 import json
 from company_app.models import Company
@@ -13,6 +13,7 @@ from skills_app.models import Skill
 from applicant_app.models import Applicant
 from user_app.models import User
 from django.contrib.auth import authenticate
+from rest_framework.decorators import api_view
 # Create your views here.
 # Refactor to ask for everything in one url request 
 # Returns all job postings
@@ -219,7 +220,15 @@ class Jobs_Favorites_List(APIView):
         except Exception as e:
             print(e)
             return Response("Error returning jobs",status=HTTP_400_BAD_REQUEST)
-
+@api_view(['GET'])
+def get_jobs_by_applicant(request, applicant_id):
+    try:
+        applicant = Applicant.objects.get(id=applicant_id)
+        jobs = Job_Posting.objects.filter(applications__applicant=applicant)
+        serialized_jobs = Job_PostingSerializer(jobs, many=True).data
+        return Response(serialized_jobs, status=HTTP_200_OK)
+    except Applicant.DoesNotExist:
+        return Response({"error": "Applicant not found"}, status=HTTP_404_NOT_FOUND)
 # for refactoring
 def urlfilter(unfilteredURL):
     return(unfilteredURL.replace(" ","%20"))

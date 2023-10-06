@@ -21,7 +21,6 @@ class Adzuna(APIView):
             endpoint = f"https://api.adzuna.com/v1/api/jobs/us/search/1?app_id={app_id}&app_key={api_key}{parameters}&results_per_page=50"
             response = requests.get(endpoint)
             jsonresponse = response.json()
-            # API Serializer?
             job_list = []
             # Number of Jobs on the Returned page
             total = round(len(jsonresponse.get("results"))/2)

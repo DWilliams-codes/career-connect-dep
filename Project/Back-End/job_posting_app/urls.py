@@ -1,6 +1,7 @@
 from django.urls import path, register_converter
 from .views import All_Job_Postings, A_Job_Posting, Job_Postings_by_Company, Job_Postings_by_Education, Job_Postings_by_location, Job_Postings_by_Skills, Job_Postings_by_Type, Jobs_Favorites_List
 from .converters import IntOrStrConverter
+from . import views
 
 register_converter(IntOrStrConverter, 'int_or_str')
 urlpatterns = [
@@ -22,4 +23,6 @@ urlpatterns = [
     path("location/<str:location>/", Job_Postings_by_location.as_view(), name="job_by_location"),
     # Returns list of favorite jobs
     path("usersjobs", Jobs_Favorites_List.as_view(),name="favorites_list"),
+    # Returns list of jobs by applicant
+    path('api/applicants/<int:applicant_id>/jobs/', views.get_jobs_by_applicant),
 ]
