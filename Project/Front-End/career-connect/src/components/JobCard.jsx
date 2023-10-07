@@ -19,21 +19,24 @@ export default function JobCard({jobtitle, company, location, description}) {
     }
   };
 // This may need some conditional rendering to ensure the card does not display unless the props being rendered on the screen are actually provided.
-    return (
-      <><div className="job-card">
-        <h2>{jobtitle}</h2> 
-        <h3>{company}</h3>
-        <p>{location}</p>
-        {/* placeholder will add to list of favorites on user profile */}
-        <button onClick={() => {addToFavorites}}>Add to favorites</button>
-        {/* placeholder will remove from list of favorites on user profile */}
-        <button onClick={removeFromFavorites}>Remove from Favorites</button>
-        {/* will link to application */}
-        <button onClick={() => {navigate(`Application`)}}>Apply</button>
-        <div>
-          <p>{description}</p>
+return (
+  <>
+    <div className="card mb-3">
+      <div className="card-body">
+        <h2 className="card-title">{jobtitle}</h2>
+        <h3 className="card-subtitle mb-2 text-muted">{company}</h3>
+        <p className="card-text">{location}</p>
+        <div className="d-flex justify-content-between">
+          <button className="btn btn-primary" onClick={addToFavorites}>Add to favorites</button>
+          <button className="btn btn-secondary" onClick={removeFromFavorites}>Remove from Favorites</button>
+          <button className="btn btn-success" onClick={() => {navigate(`Application`)}}>Apply</button>
         </div>
+        <div className="mt-3">
+          <p className="card-text">{description}</p>
         </div>
-        </>
-    );
+      </div>
+    </div>
+  </>
+);
+
   };

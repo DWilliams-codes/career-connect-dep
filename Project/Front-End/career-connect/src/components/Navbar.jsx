@@ -8,8 +8,8 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light nav-custom">
-      <Link className="brand" to="">
+    <nav className="navbar navbar-expand-lg navbar-light bg-light nav-custom">
+      <Link className="navbar-brand brand" to="">
         <h1>Career Connect</h1>
       </Link>
       <button
@@ -71,4 +71,5 @@ export default function Navbar() {
       </div>
     </nav>
   );
+  
 }
