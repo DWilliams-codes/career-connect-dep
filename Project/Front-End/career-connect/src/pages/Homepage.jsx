@@ -26,7 +26,7 @@ export default function HomePage() {
       if(location == ''){
         try{
           // Pings Api
-          const response = await axios.get(`http://localhost:8000/api/v1/job_postings/${jobtitle.replace(" ","")}`,{mode:'cors'})
+          const response = await axios.get(`http://23.20.67.216:8000/api/v1/job_postings/${jobtitle.replace(" ","")}`,{mode:'cors'})
         .then((response) => {
           setjobs(response.data)
         });
@@ -37,7 +37,7 @@ export default function HomePage() {
       }
       else{
         try {
-          const response = await axios.get(`http://localhost:8000/api/v1/job_postings/${jobtitle.replace(" ","")}/$where=${location.replace(" ","")}`,{mode:'cors'})
+          const response = await axios.get(`http://23.20.67.216:8000/api/v1/job_postings/${jobtitle.replace(" ","")}/$where=${location.replace(" ","")}`,{mode:'cors'})
           .then((response) => {
             setjobs(response.data)
           });
