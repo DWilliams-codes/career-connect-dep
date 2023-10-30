@@ -3,7 +3,6 @@ import JobCard from "../components/JobCard";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-
 export default function HomePage() {
     const navigate = useNavigate();
     //  This is likely a behavior that can be specify within the inputs onChange field
